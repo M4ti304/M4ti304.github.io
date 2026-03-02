@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serce</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fcaef1; 
+        }
+
+        .heart-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .heart {
+            width: 800px;
+            height: 800px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .shadow {
+            width: 300px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            margin-top: 20px;
+            animation: shadow-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shadow-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-container">
+        <img src="serce.png" alt="Serce" class="heart">
+        <div class="shadow"></div>
+    </div>
+
+</body>
+</html>

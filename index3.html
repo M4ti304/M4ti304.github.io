@@ -25,7 +25,7 @@
 
         .heart {
             width: 300px;
-            height: 300px;
+            height: auto; 
             cursor: pointer;
             animation: pulse 2s infinite ease-in-out;
         }
@@ -33,11 +33,15 @@
         .small-heart {
             position: absolute;
             bottom: -50px; 
-            color: #ff4d6d;
             user-select: none;
             pointer-events: none;
             z-index: 1;
             animation: floatUp var(--duration) linear forwards;
+        }
+
+        .small-heart img {
+            width: 100%;
+            height: auto;
         }
 
         @keyframes pulse {
@@ -57,8 +61,7 @@
                 opacity: 1;
             }
             100% {
-
-                transform: translateY(-110vh) rotate(360deg);
+                transform: translateY(-120vh) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -67,22 +70,23 @@
 <body>
 
     <div class="heart-container">
-        <img src="serce-1.png" alt="❤️" class="heart" onerror="this.src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">
+        <img src="serce-1.png" id="serce" alt="❤️" class="heart" onerror="this.src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">
     </div>
 
     <script>
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'small-heart';
-            heart.innerHTML = '🩷';
+
+            heart.innerHTML = `<img src="serce-1.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">`;
 
             const startPos = Math.random() * 100;
             heart.style.left = startPos + 'vw';
 
-            const size = Math.random() * 20 + 10;
-            heart.style.fontSize = size + 'px';
+            const size = Math.random() * 30 + 20; 
+            heart.style.width = size + 'px';
 
-            const duration = Math.random() * 3 + 3;
+            const duration = Math.random() * 3 + 4;
             heart.style.setProperty('--duration', duration + 's');
 
             heart.style.animationDelay = Math.random() * 5 + 's';
@@ -91,14 +95,14 @@
 
             setTimeout(() => {
                 heart.remove();
-            }, 10000000000000000);
+            }, 10000);
         }
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 30; i++) {
             createHeart();
         }
 
-        setInterval(createHeart, 200);
+        setInterval(createHeart, 300);
     </script>
 
 </body>

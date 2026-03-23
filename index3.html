@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Działające Serce</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f6b6ff; 
+            overflow: hidden; 
+            font-family: Arial, sans-serif;
+        }
+
+        .heart-container {
+            position: relative;
+            z-index: 999; 
+            text-align: center;
+        }
+
+        .heart {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .small-heart {
+            position: absolute;
+            bottom: -50px; 
+            color: #ff4d6d;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp var(--duration) linear forwards;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-container">
+        <img src="serce-1.png" alt="❤️" class="heart" onerror="this.src='https://cdn-icons-png.flaticon.com/512/833/833472.png'">
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'small-heart';
+            heart.innerHTML = '&#128151';
+
+            const startPos = Math.random() * 100;
+            heart.style.left = startPos + 'vw';
+
+            const size = Math.random() * 20 + 10;
+            heart.style.fontSize = size + 'px';
+
+            const duration = Math.random() * 3 + 3;
+            heart.style.setProperty('--duration', duration + 's');
+
+            heart.style.animationDelay = Math.random() * 5 + 's';
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000000000000000);
+        }
+
+        for (let i = 0; i < 50; i++) {
+            createHeart();
+        }
+
+        setInterval(createHeart, 200);
+    </script>
+
+</body>
+</html>

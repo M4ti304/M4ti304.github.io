@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -21,9 +22,7 @@
             cursor: pointer;
         }
 
-        /* =========================
-           SERDUSZKA W TLE
-        ========================= */
+        /* SERDUSZKA W TLE */
 
         .heart {
             position: absolute;
@@ -66,18 +65,13 @@
             }
         }
 
-
-        /* =========================
-           GŁÓWNY KONTENER
-        ========================= */
+        /* GŁÓWNY KONTENER */
 
         .container {
             position: relative;
             z-index: 10;
-
             width: min(900px, 92%);
             height: 100vh;
-
             margin: 0 auto;
 
             display: flex;
@@ -88,14 +82,10 @@
             padding: 30px 0;
         }
 
-
-        /* =========================
-           GALERIA (PŁYNNE PRZENIKANIE)
-        ========================= */
+        /* GALERIA */
 
         .gallery {
             position: relative;
-
             width: min(650px, 90vw);
             height: min(65vh, 600px);
 
@@ -134,7 +124,6 @@
             opacity: 0;
             transform: scale(0.97);
 
-            /* Powolne, płynne przenikanie obrazów */
             transition:
                 opacity 2.5s ease-in-out,
                 transform 3.5s ease-in-out;
@@ -145,10 +134,7 @@
             transform: scale(1);
         }
 
-
-        /* =========================
-           TEKST
-        ========================= */
+        /* TEKST */
 
         .message {
             width: min(700px, 90vw);
@@ -179,14 +165,10 @@
             transform: translateY(0);
         }
 
-
-        /* =========================
-           PRZYCISK MUZYKI
-        ========================= */
+        /* PRZYCISK MUZYKI */
 
         .music-button {
             position: fixed;
-
             right: 20px;
             bottom: 20px;
 
@@ -197,13 +179,10 @@
             border-radius: 50%;
 
             background: rgba(255, 255, 255, 0.7);
-
             color: #d94d87;
-
             font-size: 22px;
 
             cursor: pointer;
-
             z-index: 2000;
 
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
@@ -216,13 +195,9 @@
             background: white;
         }
 
-
-        /* =========================
-           TELEFON
-        ========================= */
+        /* TELEFON */
 
         @media (max-width: 600px) {
-
             .gallery {
                 height: 55vh;
             }
@@ -241,40 +216,34 @@
     </style>
 </head>
 
-
 <body>
 
-
-    <!-- =========================================
-         MUZYKA
-    ========================================== -->
+    <!-- MUZYKA -->
 
     <audio id="music" loop>
-        <source src="muzyka.mp4" type="audio/mpeg">
+        <source src="muzyka.mp4" type="audio/mp4">
     </audio>
 
-
-    <!-- =========================================
-         GŁÓWNA ZAWARTOŚĆ
-    ========================================== -->
+    <!-- GŁÓWNA ZAWARTOŚĆ -->
 
     <main class="container">
 
         <div class="gallery">
-            <!-- TUTAJ WPISZ SWOJE ZDJĘCIA -->
+
+            <!-- TYLKO PIERWSZE ZDJĘCIE MA ACTIVE -->
+
             <img src="1.jpg" class="photo active" alt="Zdjęcie 1">
-            <img src="3.jpg" class="photo active" alt="Zdjęcie 1">
-            <img src="4.jpg" class="photo active" alt="Zdjęcie 1">
-            <img src="5.jpg" class="photo active" alt="Zdjęcie 1">
+            <img src="3.jpg" class="photo" alt="Zdjęcie 2">
+            <img src="4.jpg" class="photo" alt="Zdjęcie 3">
+            <img src="5.jpg" class="photo" alt="Zdjęcie 4">
+
         </div>
 
-        <!-- STAŁY NAPIS POD GALERIĄ -->
         <div id="message" class="message">
             Kocham cię bardzo❤️😘
         </div>
 
     </main>
-
 
     <!-- PRZYCISK MUZYKI -->
 
@@ -282,15 +251,13 @@
         🔇
     </button>
 
-
     <script>
 
-        /* =========================================
-           AUTOMATYCZNE PRZENIKANIE ZDJĘĆ
-        ========================================== */
+        /* AUTOMATYCZNE PRZENIKANIE ZDJĘĆ */
 
         const photos = document.querySelectorAll(".photo");
         const messageElement = document.getElementById("message");
+
         let current = 0;
 
         window.addEventListener("load", () => {
@@ -300,20 +267,21 @@
         });
 
         setInterval(() => {
+
             photos[current].classList.remove("active");
 
             current++;
+
             if (current >= photos.length) {
                 current = 0;
             }
 
             photos[current].classList.add("active");
-        }, 6000); // Zmiana zdjęcia co 6 sekund
+
+        }, 6000);
 
 
-        /* =========================================
-           MUZYKA
-        ========================================== */
+        /* MUZYKA */
 
         const music = document.getElementById("music");
         const musicButton = document.getElementById("musicButton");
@@ -321,6 +289,7 @@
         let musicStarted = false;
 
         function startMusic() {
+
             music.play()
                 .then(() => {
                     musicStarted = true;
@@ -329,35 +298,50 @@
                 .catch(() => {
                     musicButton.textContent = "🔇";
                 });
+
         }
 
         musicButton.addEventListener("click", (event) => {
+
             event.stopPropagation();
 
             if (music.paused) {
-                music.play();
-                musicButton.textContent = "🔊";
+
+                music.play()
+                    .then(() => {
+                        musicStarted = true;
+                        musicButton.textContent = "🔊";
+                    })
+                    .catch(() => {
+                        musicButton.textContent = "🔇";
+                    });
+
             } else {
+
                 music.pause();
                 musicButton.textContent = "🔇";
+
             }
+
         });
 
 
-        /* =========================================
-           SERDUSZKA
-        ========================================== */
+        /* SERDUSZKA W TLE */
 
         function createHeart() {
+
             const heart = document.createElement("div");
+
             heart.classList.add("heart");
 
             heart.style.left = Math.random() * 100 + "vw";
 
             const duration = Math.random() * 4 + 4;
+
             heart.style.animationDuration = duration + "s";
 
             const size = Math.random() * 40 + 20;
+
             heart.style.width = size + "px";
             heart.style.height = size + "px";
 
@@ -368,16 +352,16 @@
             setTimeout(() => {
                 heart.remove();
             }, (duration + 2) * 1000);
+
         }
 
         setInterval(createHeart, 250);
 
 
-        /* =========================================
-           SERDUSZKA PO KLIKNIĘCIU
-        ========================================== */
+        /* SERDUSZKA PO KLIKNIĘCIU */
 
         window.addEventListener("click", (e) => {
+
             if (!musicStarted) {
                 startMusic();
             }
@@ -385,10 +369,13 @@
             const amount = 12;
 
             for (let i = 0; i < amount; i++) {
+
                 const burstHeart = document.createElement("div");
+
                 burstHeart.classList.add("heart-burst");
 
                 const size = Math.random() * 25 + 15;
+
                 burstHeart.style.width = size + "px";
                 burstHeart.style.height = size + "px";
 
@@ -421,7 +408,9 @@
                 ).onfinish = () => {
                     burstHeart.remove();
                 };
+
             }
+
         });
 
     </script>
